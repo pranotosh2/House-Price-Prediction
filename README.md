@@ -44,7 +44,7 @@ XGBoost Regressor (Final Model)
 # ⚙️ Hyperparameter Tuning
 
 GridSearchCV was used to find the best parameters for XGBoost.
-
+#
 `param_grid = {
   'colsample_bytree': [0.1, 0.3, 0.5, 0.7, 0.9],
   'learning_rate'   : [0.001, 0.01, 0.1, 1],
@@ -53,8 +53,8 @@ GridSearchCV was used to find the best parameters for XGBoost.
   'n_estimators'    : [10, 50, 100]
 }`
 
-
-Evaluation Metrics
+#
+# Evaluation Metrics
 
 * RMSE: 0.2517315686480639
 * R2 Score: 0.6718152233407819
@@ -64,8 +64,8 @@ Evaluation Metrics
 The tuned XGBoost model achieved the best performance in terms of RMSE and R², making it suitable for deployment.
 
 # Run Using Docker Hub
-The prebuilt Docker image is available on Docker Hub: `https://hub.docker.com/r/pranotosh/house-price-prediction`
-Pull the image : `docker pull pranotosh/house-price-prediction`
-Run the container : `docker run -p 8501:8501 pranotosh/house-price-prediction`
-Open in Browse : `http://localhost:8501`
+* The prebuilt Docker image is available on Docker Hub: [Docker Hub Image](https://hub.docker.com/r/pranotosh/house-price-prediction)
+* Pull the image : `docker pull pranotosh/house-price-prediction`
+* Run the container : `docker run -p 8501:8501 pranotosh/house-price-prediction`
+* Open in Browse : `http://localhost:8501`
 

@@ -44,16 +44,15 @@ XGBoost Regressor (Final Model)
 # ⚙️ Hyperparameter Tuning
 
 GridSearchCV was used to find the best parameters for XGBoost.
-#
-`param_grid = {
+
+param_grid = {
   'colsample_bytree': [0.1, 0.3, 0.5, 0.7, 0.9],
   'learning_rate'   : [0.001, 0.01, 0.1, 1],
   'max_depth'       : [3, 5, 8, 10],
   'alpha'           : [1, 10, 100],
   'n_estimators'    : [10, 50, 100]
-}`
+}
 
-#
 # Evaluation Metrics
 
 * RMSE: 0.2517315686480639

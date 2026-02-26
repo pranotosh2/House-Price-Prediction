@@ -1,7 +1,5 @@
 FROM python:3.10-slim
 
-
-
 WORKDIR /app/
 
 COPY requirements.txt .
@@ -12,5 +10,6 @@ COPY . .
 # Streamlit default port
 EXPOSE 8501
 
-# 🚀 Run Streamlit app
+# Run Streamlit app
+
 CMD ["streamlit", "run", "app.py"]

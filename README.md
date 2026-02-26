@@ -1,103 +1,71 @@
-🏠 House Price Prediction using Machine Learning
+## 🏠 House Price Prediction using Machine Learning
 📌 Project Description
 
 This project focuses on predicting house prices using machine learning regression techniques.
-It covers the complete end-to-end ML workflow including data analysis, feature engineering, model training, hyperparameter tuning, and deployment using Streamlit.
+It covers the complete end-to-end ML workflow including data analysis, feature engineering, model training, hyperparameter tuning, and deploy on DockerHub.
 
-🚀 Objectives
+# 🚀 Objectives
 
-Analyze housing data and identify key price-driving features
+* Analyze housing data and identify key price-driving features
 
-Apply feature engineering and transformations
+* Apply feature engineering and transformations
 
-Train multiple regression models
+* Train multiple regression models
 
-Optimize performance using hyperparameter tuning
+* Optimize performance using hyperparameter tuning
 
-Deploy the final model as a web application
+* Deploy the final model using Docker and DockerHub
 
-📊 Dataset Overview
+# 📊 Dataset Overview
 
 Target Variable: price
-
 Total Features: Numerical + Categorical
-
 Dataset Type: Supervised Regression
-
 Important Features
-
 Area of house
-
 Number of bedrooms & bathrooms
-
 Parking availability
-
 Furnishing status
-
 Air conditioning, basement, guestroom, etc.
 
-🔧 Feature Engineering
+# 🔧 Feature Engineering
 
 Binary categorical variables encoded as 0 / 1
-
 Furnishing status encoded numerically
-
-Log transformation applied to:
-
-price
-
-area
-
+Log transformation applied to: price and area
 Removal of irrelevant and redundant features
 
-🧠 Models Implemented
+# 🧠 Models Implemented
 
 Linear Regression
-
 Ridge Regression (Regularization)
-
 XGBoost Regressor (Final Model)
 
-⚙️ Hyperparameter Tuning
+# ⚙️ Hyperparameter Tuning
 
 GridSearchCV was used to find the best parameters for XGBoost.
 
-param_grid = {
+`param_grid = {
   'colsample_bytree': [0.1, 0.3, 0.5, 0.7, 0.9],
   'learning_rate'   : [0.001, 0.01, 0.1, 1],
   'max_depth'       : [3, 5, 8, 10],
   'alpha'           : [1, 10, 100],
   'n_estimators'    : [10, 50, 100]
-}
+}`
 
 
 Evaluation Metrics
 
-RMSE (Root Mean Squared Error)
+* RMSE: 0.2517315686480639
+* R2 Score: 0.6718152233407819
 
-R² Score
-
-📈 Model Performance
+# 📈 Model Performance
 
 The tuned XGBoost model achieved the best performance in terms of RMSE and R², making it suitable for deployment.
 
-💾 Model Saving
+# Run Using Docker Hub
+The prebuilt Docker image is available on Docker Hub: `https://hub.docker.com/r/pranotosh/house-price-prediction`
+Pull the image : `docker pull pranotosh/house-price-prediction`
+Run the container : `docker run -p 8501:8501 pranotosh/house-price-prediction`
+Open in Browse : `http://localhost:8501`
 
-The trained model is saved using pickle:
-
-xgb_house_model.pkl
-
-🌐 Deployment using Streamlit
-Run the Application
-streamlit run app.py
-
-Application Features
-
-User-friendly input interface
-
-Real-time house price prediction
-
-Model loaded from .pkl file
-
-🏗 Deployment Architecture
-User Input → Streamlit UI → Feature Processing → XGBoost Model → Prediction Output

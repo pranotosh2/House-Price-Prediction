@@ -1,71 +1,168 @@
-## 🏠 House Price Prediction using Machine Learning
-📌 Project Description
+# 🏠 House Price Prediction
 
-This project focuses on predicting house prices using machine learning regression techniques.
-It covers the complete end-to-end ML workflow including data analysis, feature engineering, model training, hyperparameter tuning, and deploy on DockerHub.
+![Python](https://img.shields.io/badge/Python-3.10-blue?logo=python)
+![FastAPI](https://img.shields.io/badge/FastAPI-0.135-009688?logo=fastapi)
+![XGBoost](https://img.shields.io/badge/XGBoost-ML%20Model-orange)
+![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?logo=docker)
+![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?logo=githubactions)
 
-# 🚀 Objectives
+A production-ready **House Price Prediction** web application powered by an **XGBoost** regression model, served via a **FastAPI** REST API with a sleek dark-mode frontend — fully containerised with Docker and automated via GitHub Actions CI/CD.
 
-* Analyze housing data and identify key price-driving features
+---
 
-* Apply feature engineering and transformations
+## ✨ Features
 
-* Train multiple regression models
+- 🤖 **XGBoost model** with GridSearchCV hyperparameter tuning
+- ⚡ **FastAPI** REST backend — `/predict`, `/health`, interactive `/docs`
+- 🎨 **Premium dark-mode** HTML/JS frontend (no frameworks, no reload)
+- 🐳 **Docker** ready — single command to run
+- 🔁 **GitHub Actions** CI/CD — lint, test, build & push to GHCR automatically
 
-* Optimize performance using hyperparameter tuning
+---
 
-* Deploy the final model using Docker and DockerHub
+## 📊 Dataset & Model
 
-# 📊 Dataset Overview
+| Item | Detail |
+|---|---|
+| Dataset | `Housing.csv` — 545 samples, 13 features |
+| Target | `price` (log-transformed during training) |
+| Final Model | XGBoost Regressor (tuned via GridSearchCV) |
+| RMSE | 0.2517 |
+| R² Score | 0.6718 |
 
-Target Variable: price
-Total Features: Numerical + Categorical
-Dataset Type: Supervised Regression
-Important Features
-Area of house
-Number of bedrooms & bathrooms
-Parking availability
-Furnishing status
-Air conditioning, basement, guestroom, etc.
+**Key features:** area, bedrooms, bathrooms, stories, parking, mainroad, guestroom, basement, hotwaterheating, airconditioning, prefarea, furnishingstatus
 
-# 🔧 Feature Engineering
+---
 
-Binary categorical variables encoded as 0 / 1
-Furnishing status encoded numerically
-Log transformation applied to: price and area
-Removal of irrelevant and redundant features
+## 🚀 Quick Start
 
-# 🧠 Models Implemented
+### 1. Conda Environment (recommended)
 
-Linear Regression
-Ridge Regression (Regularization)
-XGBoost Regressor (Final Model)
+```bash
+conda env create -f environment.yml
+conda activate house-price-prediction
+uvicorn main:app --reload --port 8000
+```
 
-# ⚙️ Hyperparameter Tuning
+### 2. Pip
 
-GridSearchCV was used to find the best parameters for XGBoost.
+```bash
+pip install -r requirements.txt
+uvicorn main:app --reload --port 8000
+```
 
-```python
-param_grid = {
-  'colsample_bytree': [0.1, 0.3, 0.5, 0.7, 0.9],
-  'learning_rate'   : [0.001, 0.01, 0.1, 1],
-  'max_depth'       : [3, 5, 8, 10],
-  'alpha'           : [1, 10, 100],
-  'n_estimators'    : [10, 50, 100]
+Open **http://127.0.0.1:8000** in your browser.  
+Interactive API docs → **http://127.0.0.1:8000/docs**
+
+### 3. Docker
+
+```bash
+docker build -t house-price-prediction .
+docker run -p 8000:8000 house-price-prediction
+```
+
+---
+
+## 🌐 API Reference
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/` | HTML frontend |
+| `GET` | `/health` | Health check |
+| `POST` | `/predict` | Predict house price |
+| `GET` | `/docs` | Swagger UI |
+
+### Example Request
+
+```bash
+curl -X POST http://localhost:8000/predict \
+  -H "Content-Type: application/json" \
+  -d '{
+    "area": 3000, "bedrooms": 3, "bathrooms": 2, "stories": 2,
+    "parking": 1, "mainroad": "yes", "guestroom": "no",
+    "basement": "yes", "hotwaterheating": "no",
+    "airconditioning": "yes", "prefarea": "yes",
+    "furnishingstatus": "semi-furnished"
+  }'
+```
+
+### Example Response
+
+```json
+{
+  "predicted_price": 5823941.5,
+  "formatted_price": "₹ 5,823,942"
 }
 ```
-# Evaluation Metrics
 
-* RMSE: 0.2517315686480639
-* R2 Score: 0.6718152233407819
+---
 
-# 📈 Model Performance
+## 🧪 Running Tests
 
-The tuned XGBoost model achieved the best performance in terms of RMSE and R², making it suitable for deployment.
+```bash
+pip install pytest httpx
+pytest tests/ -v
+```
 
-# Run Using Docker Hub
-* The prebuilt Docker image is available on Docker Hub: [Docker Hub Image](https://hub.docker.com/r/pranotosh/house-price-prediction)
-* Pull the image : `docker pull pranotosh/house-price-prediction`
-* Run the container : `docker run -p 8501:8501 pranotosh/house-price-prediction`
-* Open in Browse : `http://localhost:8501`
+| Test | What it checks |
+|---|---|
+| `test_health` | `GET /health` returns 200 |
+| `test_predict_valid` | Valid payload returns `predicted_price > 0` |
+| `test_predict_invalid` | Missing fields return HTTP 422 |
 
+---
+
+## 🔁 CI/CD Pipeline (GitHub Actions)
+
+```
+Push / PR to main
+       │
+       ▼
+  ┌─────────────────────┐
+  │  🧪 test job        │
+  │  flake8 lint        │
+  │  pytest tests/      │
+  └─────────┬───────────┘
+            │ pass + push to main
+            ▼
+  ┌─────────────────────────────┐
+  │  🐳 docker-build job        │
+  │  Build Docker image         │
+  │  Push → ghcr.io (latest +   │
+  │         sha-<commit>)       │
+  └─────────────────────────────┘
+```
+
+---
+
+## 📁 Project Structure
+
+```
+House-Price-Prediction/
+├── .github/workflows/ci-cd.yml   # GitHub Actions CI/CD
+├── static/index.html             # Dark-mode HTML/JS frontend
+├── tests/
+│   └── test_api.py               # Pytest test suite
+├── main.py                       # FastAPI app (entry point)
+├── inference.py                  # Preprocessing + prediction
+├── model.py                      # Model training script
+├── environment.yml               # Conda environment
+├── requirements.txt              # Pip dependencies
+├── Dockerfile                    # Container definition
+├── xgb_house_model.pkl           # Trained XGBoost model
+├── model_features.pkl            # Feature column order
+└── Housing.csv                   # Raw dataset
+```
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| ML Model | XGBoost, scikit-learn, pandas, numpy |
+| API | FastAPI, Uvicorn, Pydantic |
+| Frontend | Vanilla HTML / CSS / JavaScript |
+| Container | Docker |
+| CI/CD | GitHub Actions → GHCR |
+| Environment | Conda (Python 3.10) |

@@ -92,14 +92,14 @@ best_model = grid_search.best_estimator_
 # -------------------------
 # 7. Evaluation
 # -------------------------
-y_pred = best_model.predict(x_test)
+# y_pred = best_model.predict(x_test)
 
-rmse = np.sqrt(mean_squared_error(y_test, y_pred))
-r2 = r2_score(y_test, y_pred)
+# rmse = np.sqrt(mean_squared_error(y_test, y_pred))
+# r2 = r2_score(y_test, y_pred)
 
-print("Best XGBoost Model Performance")
-print("RMSE:", rmse)
-print("R2 Score:", r2)
+# print("Best XGBoost Model Performance")
+# print("RMSE:", rmse)
+# print("R2 Score:", r2)
 
 # -------------------------
 # 8. Save Model

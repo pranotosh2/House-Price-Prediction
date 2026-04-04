@@ -14,7 +14,7 @@ from sklearn.linear_model import LinearRegression, Ridge
 # -------------------------
 # 1. Load Dataset
 # -------------------------
-df = pd.read_csv("C:/Users/manda/Downloads/house_price_prediction/Housing.csv")
+df = pd.read_csv("Housing.csv")
 
 # -------------------------
 # 2. Encoding Categorical Variables

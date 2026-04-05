@@ -7,7 +7,7 @@
 ![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-2088FF?logo=githubactions)
 
 A production-ready **House Price Prediction** web application powered by an **XGBoost** regression model, served via a **FastAPI** REST API with a sleek dark-mode frontend — fully containerised with Docker and automated via GitHub Actions CI/CD.
-
+The model already deployed on Render : [link](https://house-price-prediction-1-kv9d.onrender.com)
 ---
 
 ## ✨ Features
